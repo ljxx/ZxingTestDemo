@@ -5,9 +5,9 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.mylhyl.cygadapter.CygAdapter;
-import com.mylhyl.cygadapter.CygViewHolder;
 import com.ylx.zxingtestdemo.R;
+import com.ylx.zxingtestdemo.adapter.CygAdapter;
+import com.ylx.zxingtestdemo.adapter.CygViewHolder;
 
 import java.util.List;
 

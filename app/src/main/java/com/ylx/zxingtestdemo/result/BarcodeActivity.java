@@ -3,24 +3,11 @@ package com.ylx.zxingtestdemo.result;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
-import com.bumptech.glide.Glide;
-import com.litesuits.http.LiteHttp;
-import com.litesuits.http.exception.HttpException;
-import com.litesuits.http.listener.HttpListener;
-import com.litesuits.http.request.AbstractRequest;
-import com.litesuits.http.request.StringRequest;
-import com.litesuits.http.request.param.HttpMethods;
-import com.litesuits.http.response.Response;
 import com.ylx.zxingtestdemo.R;
 import com.ylx.zxingtestdemo.base.BasicActivity;
-import com.ylx.zxingtestdemo.entities.Barcode;
 import com.ylx.zxingtestdemo.scanner.common.Scanner;
 import com.ylx.zxingtestdemo.scanner.result.ISBNResult;
 import com.ylx.zxingtestdemo.scanner.result.ProductResult;
@@ -60,65 +47,9 @@ public class BarcodeActivity extends BasicActivity {
             productID = isbnResult.getISBN();
         }
 
-        LiteHttp liteHttp = LiteHttp.build(this)
-                .setSocketTimeout(5000)
-                .setConnectTimeout(5000)
-                .create();
-        executeAsync(liteHttp, productID);
+        //根据ID请求商品
+        mTextView4.setText("扫码结果为：" + productID);
 
-    }
-
-    private void executeAsync(LiteHttp liteHttp, String productID) {
-        //如果查询失败，请到 http://apistore.baidu.com/apiworks/servicedetail/1477.html 填写自己的apikey
-        StringRequest stringRequest = new StringRequest("http://apis.baidu.com/3023/barcode/barcode")
-                .setMethod(HttpMethods.Get)
-                .addHeader("apikey", "3cec8d8175109823b986b178803738db")
-                .addUrlParam("barcode", productID)
-                .setHttpListener(new HttpListener<String>() {
-                    @Override
-                    public void onLoading(AbstractRequest<String> request, long total, long len) {
-                        super.onLoading(request, total, len);
-                    }
-
-                    @Override
-                    public void onSuccess(String s, Response<String> response) {
-                        String result = response.getResult();
-                        if (!TextUtils.isEmpty(result)) onSuccessDone(result);
-                    }
-
-                    @Override
-                    public void onFailure(HttpException e, Response<String> response) {
-                        String result = response.getResult();
-                        Toast.makeText(BarcodeActivity.this, result, Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onStart(AbstractRequest<String> request) {
-                        super.onStart(request);
-                    }
-
-                    @Override
-                    public void onUploading(AbstractRequest<String> request, long total, long len) {
-                        super.onUploading(request, total, len);
-                    }
-                });
-        liteHttp.executeAsync(stringRequest);
-    }
-
-    private void onSuccessDone(String result) {
-        Log.i(TAG, "onSuccessDone: " + result);
-        Barcode barcode = JSON.parseObject(result, Barcode.class);
-        if (barcode == null) {
-            Log.e(TAG, "product is null");
-            return;
-        }
-        mTextView4.setText("名称：" + barcode.name);
-        mTextView5.setText("价格：" + barcode.price);
-        mTextView6.setText("规格：" + barcode.spec);
-        mTextView7.setText("品牌：" + barcode.brand);
-        mTextView8.setText("国家：" + barcode.country);
-        mTextView9.setText("公司：" + barcode.company);
-        Glide.with(this).load(barcode.gtin).into(mImageView);
     }
 
     public static void gotoActivity(Activity activity, Bundle bundle) {

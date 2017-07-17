@@ -2,6 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ylx.zxingtestdemo">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,7 +25,37 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ScannerActivity"></activity>
+
+        <activity
+            android:name=".ScannerActivity"
+            android:label="扫一扫">
+            <intent-filter>
+                <action android:name="com.mylhyl.zxing.scanner.client.android.SCAN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".result.UriActivity"
+            android:label="uri" />
+        <activity
+            android:name=".result.AddressBookActivity"
+            android:label="addressBook" />
+        <activity
+            android:name=".result.TextActivity"
+            android:label="text" />
+        <activity
+            android:name=".picture.PickPictureTotalActivity"
+            android:label="选择相册" />
+        <activity
+            android:name=".picture.PickPictureActivity"
+            android:label="照片" />
+        <activity
+            android:name=".base.DeCodeActivity"
+            android:theme="@style/Theme.Transparent" />
+        <activity
+            android:name=".result.BarcodeActivity"
+            android:label="barcode" />
+
     </application>
 
 </manifest>

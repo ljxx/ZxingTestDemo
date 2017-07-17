@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
 
 import com.google.zxing.Result;
@@ -57,6 +58,7 @@ public class DeCodeActivity extends BasicScannerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i("=====ActivityName=====:","" + this.getClass().getName());
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             byte[] bytes = extras.getByteArray("bytes");
